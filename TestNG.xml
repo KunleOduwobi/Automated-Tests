@@ -3,7 +3,7 @@
 <suite name = "Paylater Tests">
     <test name= "Sanity Test">
         <classes>
-            <class name="funtionalTests.Login"/>
+            <class name="functionalTests.LoanApplication"/>
         </classes>
         
     </test>
