@@ -1,4 +1,4 @@
-package funtionalTests;
+package functionalTests;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;

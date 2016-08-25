@@ -1,62 +1,76 @@
-package funtionalTests;
+package functionalTests;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
+import org.testng.mustache.Value;
 
-public class Login extends SetUp{
-	
+public class Login extends Helper {
+
 	Elements elements = new Elements();
 
-	@Test
-	public void login() throws InterruptedException{
-		
+	// Helper helper = new Helper();
+
+	@Test(groups = { "Login.login" })
+	public void login() throws InterruptedException {
+
 		// Configure Logger
-				Logger logger = Logger.getLogger("Login");
-				PropertyConfigurator
-						.configure("/Users/olukunle/Documents/workspace/Paylater/log4j.properties");
+		Logger logger = Logger.getLogger("Login.login");
+		PropertyConfigurator
+				.configure("/Users/olukunle/Documents/workspace/PaylaterCopy/log4j.properties");
 
-				// Login with Facebook
-				try {
-					driver.findElement(By.id(elements.getFacebookBtnId())).click();
-					logger.info("Facebook button clicked");
-					Thread.sleep(15000L);
-				} catch (Exception e) {
-					logger.error("Unable to click Facebook button");
-				}
+		// Find Facebook button 
+		try {
+			String text = GetTextXpath(elements.getFacebookBtnXpath());
+			logger.info(text + " found");
+		}
 
-				// Set PIN
-				try{
-				driver.findElement(By.xpath(elements.getPIN1Xpath())).click();
-				driver.findElement(By.xpath(elements.getPIN2Xpath())).click();
-				driver.findElement(By.xpath(elements.getPIN3Xpath())).click();
-				driver.findElement(By.xpath(elements.getPIN4Xpath())).click();
-				
-				logger.info("PIN set");
-				}
-				catch (Exception e){
-					logger.error("Unable to set PIN");
-				}
+		catch (Exception e) {
+			logger.error("Facebook button not found");
+		}
 
-				Thread.sleep(2000L);
-	
-//	Confirm PIN
-//	driver.findElement(
-//			By.xpath(elements.getPIN1Xpath()))
-//			.click();
-//	driver.findElement(
-//			By.xpath(elements.getPIN2Xpath()))
-//			.click();
-//	driver.findElement(
-//			By.xpath(elements.getPIN3Xpath()))
-//			.click();
-//	driver.findElement(
-//			By.xpath(elements.getPIN4Xpath()))
-//			.click();
+		// Login with Facebook
+		try {
+			ClickXpath(elements.getFacebookBtnXpath());
+			logger.info("Facebook button clicked");
+			Thread.sleep(10000L);
+		} catch (Exception e) {
+			logger.error("Unable to click Facebook button");
+		}
 
-	Thread.sleep(2000L);
-	
+		// Set PIN
+		try {
+			ClickXpath(elements.getPIN1Xpath());
+			ClickXpath(elements.getPIN2Xpath());
+			ClickXpath(elements.getPIN3Xpath());
+			ClickXpath(elements.getPIN4Xpath());
+
+			logger.info("PIN set");
+		} catch (Exception e) {
+			logger.error("Unable to set PIN");
+		}
+
+		Thread.sleep(1000L);
+
+		// Confirm PIN
+		if (getDriver().findElements(By.xpath(elements.getPINPageTitleXpath()))
+				.size() != 0) {
+			try {
+				ClickXpath(elements.getPIN1Xpath());
+				ClickXpath(elements.getPIN2Xpath());
+				ClickXpath(elements.getPIN3Xpath());
+				ClickXpath(elements.getPIN4Xpath());
+
+				logger.info("PIN Confirmed");
+			} catch (Exception e) {
+				logger.error("Unable to confirm PIN");
+			}
+
+			Thread.sleep(5000L);
+		}
+
+		// Thread.sleep(2000L);
 
 	}
 
